@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Paternity Court Bingo</title>
+    <meta name="description"
+        content="Play Bingo while you watch Paternity Court">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src=
+        "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+    </script>
+    <script src="script.js"></script>
+  </head>
+  <body onload="make_card()">
+    <h2>Paternity Court Bingo</h2>
+    <p>While watching Paternity Court certain similar phrases and actions
+      happen appear often. Use this bingo card to see how many of these things
+      you notice during an episode. Challenge your friends and see who can find
+      the most!
+    </p>
+
+    <div class="container">
+      <div class="table-head item">
+        Paternity Court Bingo!
+      </div>
+      <button class="item" id="item-1" onclick="select('item-1')">1</button>
+      <button class="item" id="item-2" onclick="select('item-2')">2</button>
+      <button class="item" id="item-3" onclick="select('item-3')">3</button>
+      <button class="item" id="item-4" onclick="select('item-4')">4</button>
+      <button class="item" id="item-5" onclick="select('item-5')">5</button>
+
+      <button class="item" id="item-6" onclick="select('item-6')">6</button>
+      <button class="item" id="item-7" onclick="select('item-7')">7</button>
+      <button class="item" id="item-8" onclick="select('item-8')">8</button>
+      <button class="item" id="item-9" onclick="select('item-9')">9</button>
+      <button class="item" id="item-10" onclick="select('item-10')">10</button>
+
+      <button class="item" id="item-11" onclick="select('item-11')">11</button>
+      <button class="item" id="item-12" onclick="select('item-12')">12</button>
+      <button class="item free-space" id="item-13" onclick="select('item-13')">
+        13
+      </button>
+      <button class="item" id="item-14" onclick="select('item-14')">14</button>
+      <button class="item" id="item-15" onclick="select('item-15')">15</button>
+
+      <button class="item" id="item-16" onclick="select('item-16')">16</button>
+      <button class="item" id="item-17" onclick="select('item-17')">17</button>
+      <button class="item" id="item-18" onclick="select('item-18')">18</button>
+      <button class="item" id="item-19" onclick="select('item-19')">19</button>
+      <button class="item" id="item-20" onclick="select('item-20')">20</button>
+
+      <button class="item" id="item-21" onclick="select('item-21')">21</button>
+      <button class="item" id="item-22" onclick="select('item-22')">22</button>
+      <button class="item" id="item-23" onclick="select('item-23')">23</button>
+      <button class="item" id="item-24" onclick="select('item-24')">24</button>
+      <button class="item" id="item-25" onclick="select('item-25')">25</button>
+    </div>
+    <div class=controls>
+      <button class="button" type="button"
+        onclick="make_card()">
+        Get New Card
+      </button>
+      <button class="button" type="button"
+        onclick="reset_selected()">
+        Clear This Card
+      </button>
+      <!-- <button class="button" type="button"
+        onclick="get_exclusive_randoms()">
+        Click me to get random string.
+      </button>
+      <span id="result">N/A</span>
+      <p id="result2">N/A</p> -->
+    </div>
+  </body>
+</html>

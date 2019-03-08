@@ -1,0 +1,65 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 200px);
+  grid-template-rows: 100px repeat(5, 190px);
+  border: 4px black solid;
+  width: 1000px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table-head {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  font-size: 48px;
+  background-color: #CCCCCC !important;
+  padding: 0px;
+}
+
+.item {
+  background-color: white;
+  display: grid;
+  align-items: center;
+  box-sizing: border-box;
+  border: 2px solid black;
+  padding: .5em;
+}
+.item_selected {
+  background-color: orange;
+  display: grid;
+  align-items: center;
+  box-sizing: border-box;
+  border: 2px solid black;
+  padding: .5em;
+}
+
+.free-space {
+  background-color: #CCCCCC;
+}
+.free-space::before {
+  content: "Free Space - Click Me!";
+}
+
+.controls {
+  text-align: center;
+}
+
+.button {
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-size: 20px !important;
+}
+.button:hover {
+  background-color: #aaa;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.15),0 6px 20px 0 rgba(0,0,0,0.10);
+
+}
