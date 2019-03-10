@@ -20,7 +20,7 @@ var bingo_list = [
   'Is not the father',
   'Judge yells',
   'Dad paid child support',
-  'Too much details about sex',
+  'Too many details about sex',
   '"Dad" raised the kid',
   'Dad demands custody',
   'Dad on birth certificate',
@@ -47,7 +47,8 @@ var bingo_list = [
   'Mom tells Dad he\'s not the father',
   'After result, mom says its okay, or glad he\'s not'
 ];
-var selected_items = []
+var items = {}
+var bingo = false;
 
 function get_random(){
   var a = Math.floor(Math.random() * bingo_list.length);
@@ -82,16 +83,28 @@ function fill_cells(){
 }
 
 function make_card(){
-  var i;
+  var i =1;
+  var row, col;
   var rands = get_exclusive_randoms(bingo_list);
-  for(i = 1; i <= 25; i++) {
+  //for(i = 1; i <= 25; i++) {
     //text += get_random() + " ";
-    var target = 'item-' + i;
-    document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
+  for(row=1; row <= 5; row++){
+    for(col=1; col <= 5; col++){
+      var target = 'item-' + i;
+      //fill box with bingo_list text
+      document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
+      //setup item object
+      items[target] = {
+        "selected":false,
+        "row": row,
+        "col": col,
+      };
+      i++;
+    }
   }
-  //free Space
+  // set free-space text
   document.getElementById("item-13").innerHTML = free_space;
-  //clear selected
+  //clear the board of all selected
   reset_selected();
 }
 
@@ -99,6 +112,7 @@ function reset_selected(){
   var i;
   for(i=1; i<=25; i++){
     document.getElementById("item-" + i).className = "item";
+    items["item-"+i]["selected"] = false;
   }
   document.getElementById("item-13").className += " free-space";
 }
@@ -119,10 +133,52 @@ function select(item) {
   var sel = document.getElementById(item);
   if( sel.className === "item" || sel.className === "item free-space"){
     sel.className = "item_selected";
+    items[item]["selected"] = true;
+    detect_bingo(item)
+    //console.log(item+" "+detect_bingo(item));
   }else if (item == "item-13") {
     sel.className = "item free-space";
+    items[item]["selected"] = false;
   }else{
     sel.className = "item";
+    items[item]["selected"] = false;
   }
+}
+
+// returns only the number part of the item name, 'item-3' -> 3
+function strip_name(item){
+  var start = item.indexOf("-") + 1;
+  return Number( item.slice(start));
+}
+// adds 'item-' to given item number
+function get_row(row_number){
+  return "item-" + number;
+}
+
+//checks for bingo only from last updated location
+function detect_bingo(item){
+  //find horizontal
+  var horz_looking = true;
+  var row_start = (items[item]["row"] - 1) * 5 + 1;
+  var selected_count = 0;
+  while(horz_looking && selected_count < 5){
+    if( items["item-"+row_start]["selected"] == true ){
+      //found one
+      selected_count++;
+    }else{ //didnt find one, no bingo on this line
+      horz_looking = false;
+    }
+    row_start++;
+  }
+  if(selected_count == 5){
+    console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
+    return true;
+  }else {
+    return false;
+  }
+
+  //find vertical
+
+  //find diagonal
 }
 //print_test();
