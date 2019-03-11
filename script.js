@@ -172,7 +172,7 @@ function detect_bingo(item){
     }else{ //didnt find one, no bingo on this line
       horz_looking = false;
     }
-    row_start++;
+    row_start++; // increment to next in row
   }
   if(selected_count == 5){
     console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
@@ -191,7 +191,7 @@ function detect_bingo(item){
     }else{ // didn't find one, no bingo on this line
       vert_looking = false;
     }
-    col_start += 5;
+    col_start += 5; // increment to next in column
   }
   if(selected_count == 5){
     console.log("Bingo Detected! vertical-column:" + items[item]["col"] );
@@ -199,8 +199,47 @@ function detect_bingo(item){
     //return true;
   }
 
-  //find diagonal
-  
-
+  //find diagonal (fwd = forward rev = reverse)
+  var diag_looking_fwd = true;
+  var diag_looking_rev = true;
+  var diag_start_fwd = 1;
+  var diag_start_rev = 5;
+  var selected_count_fwd = 0;
+  var selected_count_rev = 0;
+  // pre-check to see if selected is on diagonals
+  var diagonals = [1, 5, 7, 9, 13, 17, 19, 21, 25];
+  if ( diagonals.indexOf(strip_name(item)) == -1 ){
+    diag_looking_fwd = false;
+    diag_looking_rev = false;
+  }
+  // forward check loop
+  while( diag_looking_fwd && selected_count_fwd < 5){
+    if( items["item-"+diag_start_fwd]["selected"] == true ){
+      //found one
+      selected_count_fwd++;
+    }else{ // didn't find one, no bingo on this diagonal
+      diag_looking_fwd = false;
+    }
+    diag_start_fwd += 6; //forward diagonal increment
+  }
+  while( diag_looking_rev && selected_count_rev < 5){
+    if( items["item-"+diag_start_rev]["selected"] == true ){
+      //found one
+      selected_count_rev++;
+    }else{ // didn't find one, no bingo on this diagonal
+      diag_looking_rev = false;
+    }
+    diag_start_rev += 4; //reverse  diagonal increment
+  }
+  if(selected_count_fwd == 5){
+    console.log("Bingo Detected! forward diagonal");
+    found_bingo_d = true;
+    //return true;
+  }else if(selected_count_rev == 5){
+    console.log("Bingo Detected! reverse diagonal");
+    found_bingo_d = true;
+    //return true;
+  }
+  return(found_bingo_h || found_bingo_v || found_bingo_d);
 }
 //print_test();
