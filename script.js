@@ -115,6 +115,7 @@ function reset_selected(){
     items["item-"+i]["selected"] = false;
   }
   document.getElementById("item-13").className += " free-space";
+  console.log("New game started.");
 }
 
 //deprecated
@@ -135,7 +136,7 @@ function select(item) {
     sel.className = "item_selected";
     items[item]["selected"] = true;
     detect_bingo(item)
-    //console.log(item+" "+detect_bingo(item));
+    console.log(item+" "+detect_bingo(item));
   }else if (item == "item-13") {
     sel.className = "item free-space";
     items[item]["selected"] = false;
@@ -157,6 +158,9 @@ function get_row(row_number){
 
 //checks for bingo only from last updated location
 function detect_bingo(item){
+  found_bingo_h = false;
+  found_bingo_v = false;
+  found_bingo_d = false;
   //find horizontal
   var horz_looking = true;
   var row_start = (items[item]["row"] - 1) * 5 + 1;
@@ -172,13 +176,31 @@ function detect_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
-    return true;
-  }else {
-    return false;
+    found_bingo_h = true;
+    //return true;
   }
 
   //find vertical
+  var vert_looking = true;
+  var col_start = items[item]["col"];
+  var selected_count = 0;
+  while(vert_looking && selected_count < 5){
+    if( items["item-"+col_start]["selected"] == true ){
+      //found one
+      selected_count++;
+    }else{ // didn't find one, no bingo on this line
+      vert_looking = false;
+    }
+    col_start += 5;
+  }
+  if(selected_count == 5){
+    console.log("Bingo Detected! vertical-column:" + items[item]["col"] );
+    found_bingo_v = true;
+    //return true;
+  }
 
   //find diagonal
+  
+
 }
 //print_test();
