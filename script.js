@@ -158,9 +158,13 @@ function get_row(row_number){
 
 //checks for bingo only from last updated location
 function detect_bingo(item){
-  found_bingo_h = false;
-  found_bingo_v = false;
-  found_bingo_d = false;
+  found_bingo_h = detect_horizontal_bingo(item);
+  found_bingo_v = detect_vertical_bingo(item);
+  found_bingo_d = detect_diagonal_bingo(item);
+  return(found_bingo_h || found_bingo_v || found_bingo_d);
+}
+
+function detect_horizontal_bingo(item){
   //find horizontal
   var horz_looking = true;
   var row_start = (items[item]["row"] - 1) * 5 + 1;
@@ -176,10 +180,12 @@ function detect_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
-    found_bingo_h = true;
-    //return true;
+    return true;
+  }else{
+    return false;
   }
-
+}
+function detect_vertical_bingo(item){
   //find vertical
   var vert_looking = true;
   var col_start = items[item]["col"];
@@ -195,10 +201,12 @@ function detect_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! vertical-column:" + items[item]["col"] );
-    found_bingo_v = true;
-    //return true;
+    return true;
+  }else{
+    return false;
   }
-
+}
+function detect_diagonal_bingo(item){
   //find diagonal (fwd = forward rev = reverse)
   var diag_looking_fwd = true;
   var diag_looking_rev = true;
@@ -233,13 +241,13 @@ function detect_bingo(item){
   }
   if(selected_count_fwd == 5){
     console.log("Bingo Detected! forward diagonal");
-    found_bingo_d = true;
-    //return true;
+    return true;
   }else if(selected_count_rev == 5){
     console.log("Bingo Detected! reverse diagonal");
-    found_bingo_d = true;
-    //return true;
+    return true;
+  }else{
+    return false;
   }
-  return(found_bingo_h || found_bingo_v || found_bingo_d);
 }
+
 //print_test();
