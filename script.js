@@ -96,6 +96,7 @@ function make_card(){
       //setup item object
       items[target] = {
         "selected":false,
+        //"part_bingo":false, //part of a bingo line
         "row": row,
         "col": col,
       };
@@ -112,6 +113,7 @@ function reset_selected(){
   var i;
   for(i=1; i<=25; i++){
     document.getElementById("item-" + i).className = "item";
+    document.getElementById("item-" + i).setAttribute("data-bingo", "")
     items["item-"+i]["selected"] = false;
   }
   document.getElementById("item-13").className += " free-space";
@@ -139,9 +141,11 @@ function select(item) {
     //console.log(item+" "+detect_bingo(item));
   }else if (item == "item-13") {
     sel.className = "item free-space";
+    sel.setAttribute("data-bingo", "")
     items[item]["selected"] = false;
   }else{
     sel.className = "item";
+    sel.setAttribute("data-bingo", "")
     items[item]["selected"] = false;
   }
 }
