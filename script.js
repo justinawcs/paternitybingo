@@ -136,7 +136,7 @@ function select(item) {
     sel.className = "item_selected";
     items[item]["selected"] = true;
     detect_bingo(item)
-    console.log(item+" "+detect_bingo(item));
+    //console.log(item+" "+detect_bingo(item));
   }else if (item == "item-13") {
     sel.className = "item free-space";
     items[item]["selected"] = false;
@@ -161,6 +161,7 @@ function detect_bingo(item){
   found_bingo_h = detect_horizontal_bingo(item);
   found_bingo_v = detect_vertical_bingo(item);
   found_bingo_d = detect_diagonal_bingo(item);
+  // found_bingo_f = detect_four_corners_bingo(item); // not included yet
   return(found_bingo_h || found_bingo_v || found_bingo_d);
 }
 
@@ -244,6 +245,33 @@ function detect_diagonal_bingo(item){
     return true;
   }else if(selected_count_rev == 5){
     console.log("Bingo Detected! reverse diagonal");
+    return true;
+  }else{
+    return false;
+  }
+}
+
+function detect_four_corners_bingo(item){
+  //find four corners and free space
+  var four_looking = true;
+  var corners = [1, 5, 13, 21, 25];
+  var index = 0;
+  var selected_count = 0;
+  // pre-check to see if selected is on diagonals
+  if ( corners.indexOf(strip_name(item)) == -1 ){
+    four_looking = false;
+  }
+  while(four_looking && selected_count < 5){
+    if( items["item-"+corners[index] ]["selected"] == true ){
+      //found one
+      selected_count++;
+    }else{ //didnt find one, no bingo on this line
+      four_looking = false;
+    }
+    index++; // increment to next in row
+  }
+  if(selected_count == 5){
+    console.log("Bingo Detected! four corners and free space");
     return true;
   }else{
     return false;
