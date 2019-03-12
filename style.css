@@ -41,6 +41,52 @@
   content: "Free Space - Click Me!";
 }
 
+button[data-bingo=horz] {
+  background: #FFA500;
+  background: -moz-linear-gradient(top, #FFA500 15%, #FFFFFF 50%,
+        #FFA500 85%);
+  background: -webkit-linear-gradient(top, #FFA500 15%, #FFFFFF 50%,
+        #FFA500 85%);
+  background: linear-gradient(to bottom, #FFA500 15%, #FFFFFF 50%,
+        #FFA500 85%);
+}
+button[data-bingo=vert] {
+  background: #FFA500;
+  background: -moz-linear-gradient(left, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: -webkit-linear-gradient(left, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: linear-gradient(to right, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+}
+button[data-bingo=diagF] {
+  background: #FFA500;
+  background: -moz-linear-gradient(45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: -webkit-linear-gradient(45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: linear-gradient(45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+}
+button[data-bingo=diagR] {
+  background: #FFA500;
+  background: -moz-linear-gradient(-45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: -webkit-linear-gradient(-45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+  background: linear-gradient(-45deg, #FFA500 20%, #FFFFFF 50%,
+      #FFA500 80%);
+}
+button[data-bingo=mult] {
+  background: #FFA500;
+  background: -moz-radial-gradient(center, #FFA500 0%, #FFFFFF 40%,
+      #FFA500 85%);
+  background: -webkit-radial-gradient(center, #FFA500 0%, #FFFFFF 40%,
+      #FFA500 85%);
+  background: radial-gradient(ellipse at center, #FFA500 0%, #FFFFFF 40%,
+      #FFA500 85%);
+}
+
 .controls {
   text-align: center;
 }
