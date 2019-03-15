@@ -96,7 +96,7 @@ function make_card(){
       //setup item object
       items[target] = {
         "selected":false,
-        //"part_bingo":false, //part of a bingo line
+        "part_bingo":false, //part of a bingo line
         "row": row,
         "col": col,
       };
@@ -138,7 +138,7 @@ function select(item) {
     sel.className = "item_selected";
     items[item]["selected"] = true;
     detect_bingo(item)
-    //console.log(item+" "+detect_bingo(item));
+    console.log(item+" "+detect_bingo(item));
   }else if (item == "item-13") {
     sel.className = "item free-space";
     sel.setAttribute("data-bingo", "")
@@ -174,6 +174,7 @@ function detect_horizontal_bingo(item){
   var horz_looking = true;
   var row_start = (items[item]["row"] - 1) * 5 + 1;
   var selected_count = 0;
+  var line_list = [];
   while(horz_looking && selected_count < 5){
     if( items["item-"+row_start]["selected"] == true ){
       //found one
@@ -181,13 +182,15 @@ function detect_horizontal_bingo(item){
     }else{ //didnt find one, no bingo on this line
       horz_looking = false;
     }
+    line_list.push(row_start)
     row_start++; // increment to next in row
   }
   if(selected_count == 5){
     console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
-    return true;
+    draw_line(line_list, "horz");
+    return true, line_list;
   }else{
-    return false;
+    return false, null;
   }
 }
 function detect_vertical_bingo(item){
@@ -195,6 +198,7 @@ function detect_vertical_bingo(item){
   var vert_looking = true;
   var col_start = items[item]["col"];
   var selected_count = 0;
+  var line_list = [];
   while(vert_looking && selected_count < 5){
     if( items["item-"+col_start]["selected"] == true ){
       //found one
@@ -202,11 +206,13 @@ function detect_vertical_bingo(item){
     }else{ // didn't find one, no bingo on this line
       vert_looking = false;
     }
+    line_list.push(col_start);
     col_start += 5; // increment to next in column
   }
   if(selected_count == 5){
     console.log("Bingo Detected! vertical-column:" + items[item]["col"] );
-    return true;
+    draw_line(line_list, "vert");
+    return true, line_list;
   }else{
     return false;
   }
@@ -219,6 +225,8 @@ function detect_diagonal_bingo(item){
   var diag_start_rev = 5;
   var selected_count_fwd = 0;
   var selected_count_rev = 0;
+  var line_list_fwd = [];
+  var line_list_rev = [];
   // pre-check to see if selected is on diagonals
   var diagonals = [1, 5, 7, 9, 13, 17, 19, 21, 25];
   if ( diagonals.indexOf(strip_name(item)) == -1 ){
@@ -233,6 +241,7 @@ function detect_diagonal_bingo(item){
     }else{ // didn't find one, no bingo on this diagonal
       diag_looking_fwd = false;
     }
+    line_list_fwd.push(diag_start_fwd);
     diag_start_fwd += 6; //forward diagonal increment
   }
   while( diag_looking_rev && selected_count_rev < 5){
@@ -242,14 +251,23 @@ function detect_diagonal_bingo(item){
     }else{ // didn't find one, no bingo on this diagonal
       diag_looking_rev = false;
     }
+    line_list_rev.push(diag_start_rev);
     diag_start_rev += 4; //reverse  diagonal increment
   }
-  if(selected_count_fwd == 5){
+  if(selected_count_fwd == 5 && selected_count_rev == 5){
+    console.log("Bingo Detected! both forward and reverse diagonals");
+    combined = line_list_fwd.concat(line_list_rev)
+    draw_line(line_list_rev, "diagR");
+    draw_line(line_list_fwd, "diagF");
+    return true, combined; //Both
+  }else if(selected_count_fwd == 5){
     console.log("Bingo Detected! forward diagonal");
-    return true;
+    draw_line(line_list_fwd, "diagF");
+    return true, line_list_fwd;
   }else if(selected_count_rev == 5){
     console.log("Bingo Detected! reverse diagonal");
-    return true;
+    draw_line(line_list_rev, "diagR");
+    return true, line_list_rev;
   }else{
     return false;
   }
@@ -261,6 +279,7 @@ function detect_four_corners_bingo(item){
   var corners = [1, 5, 13, 21, 25];
   var index = 0;
   var selected_count = 0;
+  var line_list = [];
   // pre-check to see if selected is on diagonals
   if ( corners.indexOf(strip_name(item)) == -1 ){
     four_looking = false;
@@ -272,13 +291,21 @@ function detect_four_corners_bingo(item){
     }else{ //didnt find one, no bingo on this line
       four_looking = false;
     }
+    line_list.push(corners[index]);
     index++; // increment to next in row
   }
   if(selected_count == 5){
     console.log("Bingo Detected! four corners and free space");
-    return true;
+    draw_line(line_list, "mult");
+    return true, line_list;
   }else{
     return false;
+  }
+}
+function draw_line(line_list, type){
+  for(var i=0; i<line_list.length; i++){
+    document.getElementById("item-"+line_list[i])
+        .setAttribute("data-bingo", type)
   }
 }
 
