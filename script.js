@@ -262,11 +262,13 @@ function detect_diagonal_bingo(item, activated){
     draw_line(line_list_rev, "diagR", activated);
     draw_line(line_list_fwd, "diagF", activated);
     return true, combined; //Both
-  }else if(selected_count_fwd == 5){
+  }else if(selected_count_fwd == 5 &&
+        line_list_fwd.indexOf(strip_name(item)) != -1){
     console.log("Bingo Detected! forward diagonal");
     draw_line(line_list_fwd, "diagF", activated);
     return true, line_list_fwd;
-  }else if(selected_count_rev == 5){
+  }else if(selected_count_rev == 5 &&
+        line_list_rev.indexOf(strip_name(item)) != -1){
     console.log("Bingo Detected! reverse diagonal");
     draw_line(line_list_rev, "diagR", activated);
     return true, line_list_rev;
@@ -304,6 +306,7 @@ function detect_four_corners_bingo(item, activated){
     return false;
   }
 }
+
 function draw_line(line_list, type, activated){
   for(var i=0; i<line_list.length; i++){
     if(activated){
