@@ -26,7 +26,7 @@
   padding: .5em;
 }
 .item_selected {
-  background-color: orange;
+  background-color: #FFD17B;
   display: grid;
   align-items: center;
   box-sizing: border-box;
