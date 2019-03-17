@@ -137,14 +137,16 @@ function select(item) {
   if( sel.className === "item" || sel.className === "item free-space"){
     sel.className = "item_selected";
     items[item]["selected"] = true;
-    detect_bingo(item)
-    console.log(item+" "+detect_bingo(item));
+    detect_bingo(item, true);
+    console.log(item+" "+detect_bingo(item, true));
   }else if (item == "item-13") {
+    detect_bingo(item, false);
     sel.className = "item free-space";
     sel.setAttribute("data-bingo", "")
     items[item]["selected"] = false;
   }else{
     sel.className = "item";
+    detect_bingo(item, false);
     sel.setAttribute("data-bingo", "")
     items[item]["selected"] = false;
   }
@@ -161,15 +163,15 @@ function get_row(row_number){
 }
 
 //checks for bingo only from last updated location
-function detect_bingo(item){
-  found_bingo_h = detect_horizontal_bingo(item);
-  found_bingo_v = detect_vertical_bingo(item);
-  found_bingo_d = detect_diagonal_bingo(item);
+function detect_bingo(item, activated){
+  found_bingo_h = detect_horizontal_bingo(item, activated);
+  found_bingo_v = detect_vertical_bingo(item, activated);
+  found_bingo_d = detect_diagonal_bingo(item, activated);
   // found_bingo_f = detect_four_corners_bingo(item); // not included yet
   return(found_bingo_h || found_bingo_v || found_bingo_d);
 }
 
-function detect_horizontal_bingo(item){
+function detect_horizontal_bingo(item, activated){
   //find horizontal
   var horz_looking = true;
   var row_start = (items[item]["row"] - 1) * 5 + 1;
@@ -187,13 +189,13 @@ function detect_horizontal_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! horizontal-row:" + items[item]["row"] );
-    draw_line(line_list, "horz");
+    draw_line(line_list, "horz", activated);
     return true, line_list;
   }else{
     return false, null;
   }
 }
-function detect_vertical_bingo(item){
+function detect_vertical_bingo(item, activated){
   //find vertical
   var vert_looking = true;
   var col_start = items[item]["col"];
@@ -211,13 +213,13 @@ function detect_vertical_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! vertical-column:" + items[item]["col"] );
-    draw_line(line_list, "vert");
+    draw_line(line_list, "vert", activated);
     return true, line_list;
   }else{
     return false;
   }
 }
-function detect_diagonal_bingo(item){
+function detect_diagonal_bingo(item, activated){
   //find diagonal (fwd = forward rev = reverse)
   var diag_looking_fwd = true;
   var diag_looking_rev = true;
@@ -257,23 +259,23 @@ function detect_diagonal_bingo(item){
   if(selected_count_fwd == 5 && selected_count_rev == 5){
     console.log("Bingo Detected! both forward and reverse diagonals");
     combined = line_list_fwd.concat(line_list_rev)
-    draw_line(line_list_rev, "diagR");
-    draw_line(line_list_fwd, "diagF");
+    draw_line(line_list_rev, "diagR", activated);
+    draw_line(line_list_fwd, "diagF", activated);
     return true, combined; //Both
   }else if(selected_count_fwd == 5){
     console.log("Bingo Detected! forward diagonal");
-    draw_line(line_list_fwd, "diagF");
+    draw_line(line_list_fwd, "diagF", activated);
     return true, line_list_fwd;
   }else if(selected_count_rev == 5){
     console.log("Bingo Detected! reverse diagonal");
-    draw_line(line_list_rev, "diagR");
+    draw_line(line_list_rev, "diagR", activated);
     return true, line_list_rev;
   }else{
     return false;
   }
 }
 
-function detect_four_corners_bingo(item){
+function detect_four_corners_bingo(item, activated){
   //find four corners and free space
   var four_looking = true;
   var corners = [1, 5, 13, 21, 25];
@@ -296,17 +298,23 @@ function detect_four_corners_bingo(item){
   }
   if(selected_count == 5){
     console.log("Bingo Detected! four corners and free space");
-    draw_line(line_list, "mult");
+    draw_line(line_list, "mult", activated);
     return true, line_list;
   }else{
     return false;
   }
 }
-function draw_line(line_list, type){
+function draw_line(line_list, type, activated){
   for(var i=0; i<line_list.length; i++){
-    document.getElementById("item-"+line_list[i])
-        .setAttribute("data-bingo", type)
+    if(activated){
+      document.getElementById("item-"+line_list[i])
+          .setAttribute("data-bingo", type);
+    }else{
+      document.getElementById("item-"+line_list[i])
+          .setAttribute("data-bingo", "")
+    }
   }
 }
-
+//TODO clear formatting on deselect
+//TODO add rerolls
 //print_test();
