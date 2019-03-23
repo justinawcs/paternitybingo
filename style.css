@@ -1,10 +1,15 @@
 body{
   background:
-  radial-gradient(circle at 100% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent),
-  radial-gradient(circle at 0% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent) 0 -50px;
+  radial-gradient(circle at 100% 50%, transparent 20%,
+      rgba(255,255,255,.3) 21%,
+      rgba(255,255,255,.3) 34%, transparent 35%, transparent),
+  radial-gradient(circle at 0% 50%, transparent 20%,
+      rgba(255,255,255,.3) 21%,
+      rgba(255,255,255,.3) 34%, transparent 35%, transparent) 0 -50px;
   background-color: #94a1b0;
   background-size:75px 100px;
 }
+
 .about{
   background: #ffffffb3;
   padding: .8em;
@@ -33,6 +38,12 @@ body{
   font-weight: bolder;
   background-color: #CCCCCC !important;
   padding: 0px;
+
+  display: grid;
+align-items: center;
+box-sizing: border-box;
+border: 2px solid black;
+padding: .5em;
 }
 
 .item {
@@ -50,6 +61,34 @@ body{
   box-sizing: border-box;
   border: 2px solid black;
   padding: .5em;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    margin: 2px;
+    padding: 2px;
+  }
+  .table-head {
+    font-size: 20px;
+  }
+  .about p {
+    font-size: 11px;
+  }
+  .container {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 80px repeat(5, 1fr);
+    width: 99%;
+    min-width: 320px;
+    margin: 0 0;
+  }
+  .item, .item_selected {
+    font-size: 10px;
+    padding: .17em;
+  }
+  .button {
+    padding: 5px !important;
+    font-size: 12px !important;
+  }
 }
 
 .free-space {
@@ -120,7 +159,7 @@ button[data-bingo~=mult] {
   white-space: nowrap;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-  font-size: 20px !important;
+  font-size: 20px;
 }
 .button:hover {
   background-color: #aaa;
