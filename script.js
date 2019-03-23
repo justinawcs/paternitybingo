@@ -310,13 +310,34 @@ function detect_four_corners_bingo(item, activated){
 function draw_line(line_list, type, activated){
   for(var i=0; i<line_list.length; i++){
     if(activated){
-      document.getElementById("item-"+line_list[i])
-          .setAttribute("data-bingo", type);
+      add_attr("item-"+line_list[i], type)
     }else{
-      document.getElementById("item-"+line_list[i])
-          .setAttribute("data-bingo", "")
+      console.log("deactivate:" +line_list[i])
+      rem_attr("item-"+line_list[i], type)
     }
   }
+}
+function clear_attr(item){
+  document.getElementById(item).setAttribute("data-bingo", "");
+}
+
+//TODO Fix too many tags being added
+function add_attr(item, attr){
+  var line = document.getElementById(item).getAttribute("data-bingo");
+  if( line.indexOf(attr == -1) ){
+    line += " " + attr;
+    line = line.trim();
+    document.getElementById(item).setAttribute("data-bingo", line);
+  }
+  return line;
+}
+
+function rem_attr(item, attr){
+  var line = document.getElementById(item).getAttribute("data-bingo");
+  var new_line = line.replace(attr, "");
+  new_line = new_line.replace("  ", " "); // kill double space
+  document.getElementById(item).setAttribute("data-bingo", new_line);
+  return new_line;
 }
 //TODO clear formatting on deselect
 //TODO add rerolls
