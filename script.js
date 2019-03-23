@@ -138,7 +138,7 @@ function select(item) {
     sel.className = "item_selected";
     items[item]["selected"] = true;
     detect_bingo(item, true);
-    console.log(item+" "+detect_bingo(item, true));
+    //console.log(item+" "+detect_bingo(item, true));
   }else if (item == "item-13") {
     detect_bingo(item, false);
     sel.className = "item free-space";
@@ -256,7 +256,7 @@ function detect_diagonal_bingo(item, activated){
     line_list_rev.push(diag_start_rev);
     diag_start_rev += 4; //reverse  diagonal increment
   }
-  if(selected_count_fwd == 5 && selected_count_rev == 5){
+  if(selected_count_fwd == 5 && selected_count_rev == 5 && activated){
     console.log("Bingo Detected! both forward and reverse diagonals");
     combined = line_list_fwd.concat(line_list_rev)
     draw_line(line_list_rev, "diagR", activated);
@@ -312,7 +312,7 @@ function draw_line(line_list, type, activated){
     if(activated){
       add_attr("item-"+line_list[i], type)
     }else{
-      console.log("deactivate:" +line_list[i])
+      //console.log("deactivate:" +line_list[i])
       rem_attr("item-"+line_list[i], type)
     }
   }
@@ -324,7 +324,8 @@ function clear_attr(item){
 //TODO Fix too many tags being added
 function add_attr(item, attr){
   var line = document.getElementById(item).getAttribute("data-bingo");
-  if( line.indexOf(attr == -1) ){
+  //console.log( line.indexOf(attr) == -1);
+  if(line.indexOf(attr) == -1){
     line += " " + attr;
     line = line.trim();
     document.getElementById(item).setAttribute("data-bingo", line);
@@ -335,7 +336,7 @@ function add_attr(item, attr){
 function rem_attr(item, attr){
   var line = document.getElementById(item).getAttribute("data-bingo");
   var new_line = line.replace(attr, "");
-  new_line = new_line.replace("  ", " "); // kill double space
+  new_line = new_line.replace("  ", " ").trim(); // kill double space
   document.getElementById(item).setAttribute("data-bingo", new_line);
   return new_line;
 }
