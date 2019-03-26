@@ -1,8 +1,8 @@
 var free_space = "Had a baby!";
 var bingo_list = [
-  'Speech about wanting a Dad',
-  '"I didn\'t care he wasn\'t there"',
-  '"My mom was my mother and my father"',
+  // 'Speech about wanting a Dad',
+  // '"I didn\'t care he wasn\'t there"',
+  // '"My mom was my mother and my father"',
   'Dad looks young',
   'Suspected infedelity',
   'One night stand',
@@ -13,13 +13,13 @@ var bingo_list = [
   'Dad brings new wife/gf',
   '"Baby don\'t look like me"',
   '"Baby looks like me"',
-  'Baby actually favors father',
+  'Baby actually resembles father',
   'Test more than one man',
   '"We never had sex"',
-  'Actually is the father',
-  'Is not the father',
+  'Actually is the father', // move later
+  'Is not the father', // move later
   'Judge yells',
-  'Dad paid child support',
+  'Dad paid child support or support kid',
   'Too many details about sex',
   '"Dad" raised the kid',
   'Dad demands custody',
@@ -33,15 +33,15 @@ var bingo_list = [
   'Mention Facebook',
   'Used Fertile Window Graphic',
   'Multiple Sex Partners in a week',
-  'Nobody is the Daddy',
-  'Deceased "Dad"',
-  'Adult children',
+  'Nobody is the Daddy', // move later
+  // 'Deceased "Dad"',
+  // 'Adult children',
   '"Between jobs"',
   'Judge corrects: "Mr/Ms..."',
   'Pre-birth paternity test',
   'Baby has last name of a "friend"',
   'Somebody else on birth certificate',
-  'Child is angry',
+  // 'Child is angry',
   'Someone missed court paternity test',
   'Dad never met child',
   'Mom tells Dad he\'s not the father',
@@ -321,7 +321,6 @@ function clear_attr(item){
   document.getElementById(item).setAttribute("data-bingo", "");
 }
 
-//TODO Fix too many tags being added
 function add_attr(item, attr){
   var line = document.getElementById(item).getAttribute("data-bingo");
   //console.log( line.indexOf(attr) == -1);
@@ -340,6 +339,7 @@ function rem_attr(item, attr){
   document.getElementById(item).setAttribute("data-bingo", new_line);
   return new_line;
 }
-//TODO clear formatting on deselect
+
+//TODO add shuffle current card
 //TODO add rerolls
 //print_test();
