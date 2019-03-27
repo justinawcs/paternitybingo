@@ -1,4 +1,8 @@
 var free_space = "Had a baby!";
+var defaults = [
+  'Actually is the father',
+  'Is not the father'
+];
 var bingo_list = [
   // 'Speech about wanting a Dad',
   // '"I didn\'t care he wasn\'t there"',
@@ -19,7 +23,7 @@ var bingo_list = [
   'Actually is the father', // move later
   'Is not the father', // move later
   'Judge yells',
-  'Dad paid child support or support kid',
+  'Dad supports kid or paid child support',
   'Too many details about sex',
   '"Dad" raised the kid',
   'Dad demands custody',
@@ -33,7 +37,7 @@ var bingo_list = [
   'Mention Facebook',
   'Used Fertile Window Graphic',
   'Multiple Sex Partners in a week',
-  'Nobody is the Daddy', // move later
+  // 'Nobody is the Daddy',
   // 'Deceased "Dad"',
   // 'Adult children',
   '"Between jobs"',
@@ -86,13 +90,19 @@ function make_card(){
   var i =1;
   var row, col;
   var rands = get_exclusive_randoms(bingo_list);
+
   //for(i = 1; i <= 25; i++) {
     //text += get_random() + " ";
   for(row=1; row <= 5; row++){
     for(col=1; col <= 5; col++){
       var target = 'item-' + i;
-      //fill box with bingo_list text
-      document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
+      if(row == 3 && col == 3){
+        // free-space!
+        document.getElementById(target).innerHTML = free_space;
+      }else{
+        //fill box with bingo_list text
+        document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
+      }
       //setup item object
       items[target] = {
         "selected":false,
@@ -104,7 +114,7 @@ function make_card(){
     }
   }
   // set free-space text
-  document.getElementById("item-13").innerHTML = free_space;
+  //document.getElementById("item-13").innerHTML = free_space;
   //clear the board of all selected
   reset_selected();
 }
