@@ -1,7 +1,7 @@
 var free_space = "Had a baby!";
 var defaults = [
-  'Actually is the father',
-  'Is not the father'
+  'You are <strong>NOT</strong> the father.',
+  'You <strong>ARE</strong> the father.'
 ];
 var bingo_list = [
   // 'Speech about wanting a Dad',
@@ -20,8 +20,8 @@ var bingo_list = [
   'Baby actually resembles father',
   'Test more than one man',
   '"We never had sex"',
-  'Actually is the father', // move later
-  'Is not the father', // move later
+  // 'Actually is the father', // move later
+  // 'Is not the father', // move later
   'Judge yells',
   'Dad supports kid or paid child support',
   'Too many details about sex',
@@ -59,6 +59,25 @@ function get_random(){
   return(a);
 }
 
+function get_random_defaults(){
+  // return array of length equal to defaults of indexes
+  // with no repeats or does not cover free-space
+  var list = [];
+  var i;
+  var rand;
+  //rand = Math.ceil(Math.random() * 25); // 1 - 25
+  for(i=0; i<defaults.length; i++){
+    rand = Math.ceil(Math.random() * 25); // 1 - 25
+    // console.log(rand);
+    if(rand != 13 && list.indexOf(rand) == -1){
+      list.push(rand);
+    }else{
+      i--; //a dirty trick, but it works
+    }
+  }
+  return list;
+}
+
 function get_exclusive_randoms(array){
   //gets list 25 long of unique random indexs
   var i=0, rand, picked = [];
@@ -90,7 +109,7 @@ function make_card(){
   var i =1;
   var row, col;
   var rands = get_exclusive_randoms(bingo_list);
-
+  var defs = get_random_defaults();
   //for(i = 1; i <= 25; i++) {
     //text += get_random() + " ";
   for(row=1; row <= 5; row++){
@@ -99,6 +118,9 @@ function make_card(){
       if(row == 3 && col == 3){
         // free-space!
         document.getElementById(target).innerHTML = free_space;
+      }else if (defs.indexOf(i) != -1) {
+        document.getElementById(target).innerHTML = defaults[defs.indexOf(i)];
+        document.getElementById(target).style.display = "inline-block";
       }else{
         //fill box with bingo_list text
         document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
