@@ -105,10 +105,13 @@ function fill_cells(){
   //document(text);
 }
 
-function make_card(){
+function make_card(arr=get_exclusive_randoms(bingo_list) ){
   var i =1;
   var row, col;
-  var rands = get_exclusive_randoms(bingo_list);
+  var rands = arr;
+  rands[12] = null;
+  items["bingo_index"] = rands;
+  //items["bingo_index"][12] = null; // set free space to null
   var defs = get_random_defaults();
   //for(i = 1; i <= 25; i++) {
     //text += get_random() + " ";
@@ -128,15 +131,12 @@ function make_card(){
       //setup item object
       items[target] = {
         "selected":false,
-        "part_bingo":false, //part of a bingo line
         "row": row,
         "col": col,
       };
       i++;
     }
   }
-  // set free-space text
-  //document.getElementById("item-13").innerHTML = free_space;
   //clear the board of all selected
   reset_card();
 }
@@ -150,6 +150,18 @@ function reset_card(){
   }
   document.getElementById("item-13").className += " free-space";
   console.log("New game started.");
+}
+
+function shuffle_card(){
+  var index = items["bingo_index"].slice(0); //cloned array
+  index.sort(function(a, b){return 0.5 - Math.random()}); //random sort
+  var tgt = index.indexOf(null);
+  // switch tgt index with value of index 12, set 12 to null for free space;
+  index[tgt] = index[12];
+  index[12] = null;
+  make_card(index);
+  console.log(index.slice(0).sort().toString());
+  return index;
 }
 
 function select(item) {
