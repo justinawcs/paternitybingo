@@ -138,10 +138,10 @@ function make_card(){
   // set free-space text
   //document.getElementById("item-13").innerHTML = free_space;
   //clear the board of all selected
-  reset_selected();
+  reset_card();
 }
 
-function reset_selected(){
+function reset_card(){
   var i;
   for(i=1; i<=25; i++){
     document.getElementById("item-" + i).className = "item";
