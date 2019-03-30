@@ -152,18 +152,6 @@ function reset_selected(){
   console.log("New game started.");
 }
 
-//deprecated
-function select_old(item) {
-  col = document.getElementById(item).style.backgroundColor;
-  if(col != "orange"){
-    document.getElementById(item).style.backgroundColor = "orange";
-  }else if (item == "item-13") {
-    document.getElementById(item).style.backgroundColor = "#CCCCCC";
-  }else{
-    document.getElementById(item).style.backgroundColor = "white";
-  }
-}
-
 function select(item) {
   var sel = document.getElementById(item);
   if( sel.className === "item" || sel.className === "item free-space"){
