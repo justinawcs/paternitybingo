@@ -53,6 +53,7 @@ var bingo_list = [
 ];
 var items = {}
 var bingo = false;
+var reroll_active = false;
 
 function get_random(){
   var a = Math.floor(Math.random() * bingo_list.length);
@@ -107,7 +108,7 @@ function fill_cells(){
 
 function make_card(arr=get_exclusive_randoms(bingo_list) ){
   var i =1;
-  var row, col;
+  var row, col, text, index;
   var rands = arr;
   rands[12] = null;
   items["bingo_index"] = rands;
@@ -120,17 +121,22 @@ function make_card(arr=get_exclusive_randoms(bingo_list) ){
       var target = 'item-' + i;
       if(row == 3 && col == 3){
         // free-space!
-        document.getElementById(target).innerHTML = free_space;
+        text = free_space;
+        index = -1;
       }else if (defs.indexOf(i) != -1) {
-        document.getElementById(target).innerHTML = defaults[defs.indexOf(i)];
+        text = defaults[defs.indexOf(i)];
+        index = -1;
         document.getElementById(target).style.display = "inline-block";
       }else{
         //fill box with bingo_list text
-        document.getElementById(target).innerHTML = bingo_list[rands[i-1]];
+        text = bingo_list[rands[i-1]];
+        index = rands[i-1];
       }
+      document.getElementById(target).innerHTML = text;
       //setup item object
       items[target] = {
         "selected":false,
+        "index": index,
         "row": row,
         "col": col,
       };
@@ -162,6 +168,10 @@ function shuffle_card(){
   make_card(index);
   console.log(index.slice(0).sort().toString());
   return index;
+}
+
+function reroll(item){
+  
 }
 
 function select(item) {
@@ -372,6 +382,5 @@ function rem_attr(item, attr){
   return new_line;
 }
 
-//TODO add shuffle current card
 //TODO add rerolls
-//print_test();
+//TODO add more bingo decoration on complete line
