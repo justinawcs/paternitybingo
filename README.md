@@ -13,7 +13,7 @@ Modern javascript capable Web Browser(i.e. Chrome, Firefox, Internet Explorer, S
 
 ### Installing
 
-Coming Soon...
+Download or upload the files and point your brower to its location. Enjoy!
 
 ## Built Using
 
@@ -33,5 +33,5 @@ Coming Soon...
 
 ## Acknowledgments
 
-* Thanks to my lovely wife for the inspiration.
+* Thanks to my lovely wife for the idea.
 * Inspiration: the corporate jargon bingo memes and watching Paternity Court.
