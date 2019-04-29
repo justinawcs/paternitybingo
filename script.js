@@ -173,6 +173,12 @@ function shuffle_card(){
 }
 
 function reroll(item){
+  if(items[item]["index"] == -1){ // free space and defaults
+    console.log("Can not reroll this item.");
+    //raise error
+    //document.getElementById(item).style.animation = "denied-anim 3s";
+    return false;
+  }
   var index_copy = items["bingo_index"].slice(0); //cloned array
   var text_index = items[item]["index"];
   //find unique
@@ -194,8 +200,7 @@ function reroll(item){
   items["bingo_index"] = index_copy;
   console.log(items["bingo_index"]);
   console.log(items[item]);
-  return null;
-  // TODO add error on default or free space
+  return true;
 }
 
 function select(item) {
