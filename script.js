@@ -119,15 +119,17 @@ function make_card(arr=get_exclusive_randoms(bingo_list) ){
   for(row=1; row <= 5; row++){
     for(col=1; col <= 5; col++){
       var target = 'item-' + i;
-      if(row == 3 && col == 3){
+      if(row == 3 && col == 3){ // free space
         // free-space!
         text = free_space;
         index = -1;
-      }else if (defs.indexOf(i) != -1) {
+      }else if (defs.indexOf(i) != -1) {//default text cell
         text = defaults[defs.indexOf(i)];
+        // update bingo_index
+        items["bingo_index"][i-1] = null;
         index = -1;
         document.getElementById(target).style.display = "inline-block";
-      }else{
+      }else{ //random text cell
         //fill box with bingo_list text
         text = bingo_list[rands[i-1]];
         index = rands[i-1];
@@ -171,7 +173,29 @@ function shuffle_card(){
 }
 
 function reroll(item){
-  
+  var index_copy = items["bingo_index"].slice(0); //cloned array
+  var text_index = items[item]["index"];
+  //find unique
+  var random = get_random();
+  while (index_copy.indexOf(random) == -1){
+    console.log(random + " is taken");
+    random = get_random();
+  }
+  console.log(random + " is unique");
+  //swap around
+  var item_index = index_copy[strip_name(item)-1]
+  console.log(item_index + " " + bingo_list[item_index]
+      + " -> "+ random +" "+ bingo_list[random] )
+  document.getElementById(item).innerHTML = bingo_list[random];
+  index_copy[strip_name(item)-1] = random;
+  //console.log(index_copy);
+  items[item]["selected"] = false;
+  items[item]["index"] = random;
+  items["bingo_index"] = index_copy;
+  console.log(items["bingo_index"]);
+  console.log(items[item]);
+  return null;
+  // TODO add error on default or free space
 }
 
 function select(item) {
