@@ -163,6 +163,26 @@ function reset_card(){
 function shuffle_card(){
   var index = items["bingo_index"].slice(0); //cloned array
   index.sort(function(a, b){return 0.5 - Math.random()}); //random sort
+  //find null elements
+  var start = 0;
+  var empty = [];
+  while( index.indexOf(null, start) != -1){
+    //console.log(index.indexOf(null, start) );
+    empty.push(index.indexOf(null, start) );
+    start = index.indexOf(null, start) + 1;
+  }
+  console.log("emptys", empty);
+  //shuffle nulls
+  empty.sort(function(a, b){return 0.5 - Math.random()}); //random sort
+  for(var i=0; i<empty.length; i++ ) {
+    if( empty.indexOf(12) != -1 ){ // if null is already in free space poistion
+      del = empty.indexOf(12);
+      console.log("free space taken!", del);
+      empty.splice(del, 1);
+    }else{
+      //move first null to free space-12
+    }
+  }
   var tgt = index.indexOf(null);
   // switch tgt index with value of index 12, set 12 to null for free space;
   index[tgt] = index[12];
